@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--约束文件信息-->
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--跟标签-->
+<configuration>
+    <!--设置别名-->
+    <typeAliases>
+        <!--实体类所在包名-->
+        <package name="com.quanrong.settings.domain"/>
+    </typeAliases>
+    <!--sql mapper(sql映射文件)的位置-->
+    <mappers>
+        <!--指定一个包下的所有mapper文件，从类路径classes开始的路径信息-->
+        <package name="com.quanrong.settings.dao"/>
+    </mappers>
+</configuration>
