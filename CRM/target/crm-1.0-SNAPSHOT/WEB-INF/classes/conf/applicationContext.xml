@@ -26,7 +26,5 @@
     </bean>
     <!--声明service的注解@Service所在的包名位置-->
     <context:component-scan base-package="com.quanrong.settings.service"/>
-    <!--声明@Controller注解所在的包位置-->
-    <context:component-scan base-package="com.quanrong.settings.controller"/>
     <!--事务配置：注解的配置或者aspectJ的配置-->
 </beans>

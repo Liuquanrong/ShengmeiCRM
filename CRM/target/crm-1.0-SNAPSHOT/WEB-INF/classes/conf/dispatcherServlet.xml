@@ -12,7 +12,6 @@
     <!--springmvc配置文件，声明Controller和web相关的对象-->
     <!--组件扫描器-->
     <context:component-scan base-package="com.quanrong.settings.controller"/>
-    <context:component-scan base-package="com.quanrong.handler"/>
 <!--    &lt;!&ndash;视图解析器&ndash;&gt;-->
 <!--    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
 <!--        <property name="prefix" value="/WEB-INF/jsp/"/>-->

@@ -4,8 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace推荐使用接口的全限定名称-->
 <mapper namespace="com.quanrong.settings.dao.UserDao">
-    <select id="findUser" resultType="com.quanrong.settings.domain.User">
-        select expireTime,lockState,allowIps from tbl_user
-        where loginAct=#{loginAct} and loginPwd=#{loginPwd};
+    <select id="login" resultType="User">
+        select * from tbl_user where loginAct= #{loginAct} and loginPwd=#{loginPwd};
     </select>
 </mapper>

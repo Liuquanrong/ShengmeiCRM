@@ -31,8 +31,8 @@
 	//封装登陆验证方法
 	function login(){
 		//获取账号密码，将文本中的左右空格去除
-		let loginAct = $.trim($(":text").val());
-		let loginPwd = $.trim($(":password").val());
+		var loginAct = $.trim($(":text").val());
+		var loginPwd = $.trim($(":password").val());
 		if (loginAct=="" || loginPwd==""){
 			$("#msg").html("用户名和密码不能为空！");
 			//账号密码为空终止方法
@@ -41,21 +41,17 @@
 		//去后端验证登陆相关操作
 		$.ajax({
 			url:"user/login.do",
-			date:{
-				"loginAct":loginAct,
-				"loginPwd":loginPwd
-			},
 			type:"post",
-			dataType:"json",
-			success(date){
-				//返回的data中包含success属性true/fasle用来判断登陆是否成功
-				if (date.seccess){
+			data:{"loginAct":loginAct,"loginPwd":loginPwd},
+			success(data){
+				//返回的data中包含success属性true/false用来判断登陆是否成功
+				if (data.success){
 					//登陆成功，跳转界面
-					window.location.href = "workbench/index.html";
+					window.location.href = "workbench/index.jsp";
 				}else{
 					//登陆失败提示失败原因
 					//从后台中返回登陆失败的原因msg属性记录详细原因
-					$("#msg").html(date.msg);
+					$("#msg").html(data.msg);
 				}
 			}
 		})
@@ -75,7 +71,7 @@
 			<div class="page-header">
 				<h1>登录</h1>
 			</div>
-			<form action="workbench/index.html" class="form-horizontal" role="form">
+			<form action="workbench/index.jsp" class="form-horizontal" role="form">
 				<div class="form-group form-group-lg">
 					<div style="width: 350px;">
 						<input class="form-control" type="text" placeholder="用户名">
