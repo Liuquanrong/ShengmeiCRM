@@ -5,7 +5,7 @@ public class User {
     private String loginAct;//登陆账号
     private String name;//用户真实姓名
     private String loginPwd;//登陆密码
-    private String emil;//电子邮箱
+    private String email;//电子邮箱
     private String expireTime;//失效时间 19
     private String lockState;//锁定状态 0锁定、1启用
     private String deptno;//部门编号
@@ -50,12 +50,12 @@ public class User {
         this.loginPwd = loginPwd;
     }
 
-    public String getEmil() {
-        return emil;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmil(String emil) {
-        this.emil = emil;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getExpireTime() {

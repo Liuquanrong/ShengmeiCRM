@@ -24,7 +24,12 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
         <property name="basePackage" value="com.quanrong.settings.dao"/>
     </bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.quanrong.workbench.dao"/>
+    </bean>
     <!--声明service的注解@Service所在的包名位置-->
     <context:component-scan base-package="com.quanrong.settings.service"/>
+    <context:component-scan base-package="com.quanrong.workbench.service"/>
     <!--事务配置：注解的配置或者aspectJ的配置-->
 </beans>

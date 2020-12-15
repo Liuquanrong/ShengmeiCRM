@@ -24,7 +24,6 @@ public class UserController {
     public Map doLogin(String loginAct, String loginPwd, HttpServletRequest request){
         loginPwd = MD5Util.getMD5(loginPwd);
         String ip = request.getRemoteAddr();
-        System.out.println(ip);
         Map map = new HashMap<>();
         map.put("success",false);
         try {

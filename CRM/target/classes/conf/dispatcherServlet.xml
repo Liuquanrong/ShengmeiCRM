@@ -12,13 +12,10 @@
     <!--springmvc配置文件，声明Controller和web相关的对象-->
     <!--组件扫描器-->
     <context:component-scan base-package="com.quanrong.settings.controller"/>
-<!--    &lt;!&ndash;视图解析器&ndash;&gt;-->
-<!--    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-<!--        <property name="prefix" value="/WEB-INF/jsp/"/>-->
-<!--        <property name="suffix" value=".jsp"/>-->
-<!--    </bean>-->
+    <context:component-scan base-package="com.quanrong.workbench.controller"/>
     <!--注解驱动-->
     <mvc:annotation-driven/>
-    <!--静态文件地址-->
+    <!--静态文件交给Tomcat处理-->
     <mvc:default-servlet-handler/>
+    <!--声明拦截器对象，拦截非法请求-->
 </beans>

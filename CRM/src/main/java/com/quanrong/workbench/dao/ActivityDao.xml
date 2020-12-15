@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace推荐使用接口的全限定名称-->
+<mapper namespace="com.quanrong.workbench.dao.ActivityDao">
+    <select id="getUserList" resultType="User">
+        select * from tbl_user;
+    </select>
+    <insert id="saveActivity">
+        insert into tbl_activity values (#{id},#{owner},#{name},#{startDate},#{endDate},#{cost},
+        #{description},#{createTime},#{createBy},#{editTime},#{editBy});
+    </insert>
+</mapper>

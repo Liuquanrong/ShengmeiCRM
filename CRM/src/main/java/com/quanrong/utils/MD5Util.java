@@ -18,7 +18,7 @@ public class MD5Util {
                 buffer.append(str);
             }
             return buffer.toString();
-        } catch (NoSuchAlgorithmException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return "";
         }

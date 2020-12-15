@@ -9,10 +9,16 @@
     <typeAliases>
         <!--实体类所在包名-->
         <package name="com.quanrong.settings.domain"/>
+        <package name="com.quanrong.workbench.domian"/>
     </typeAliases>
+    <!--加入分页插件-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"/>
+    </plugins>
     <!--sql mapper(sql映射文件)的位置-->
     <mappers>
         <!--指定一个包下的所有mapper文件，从类路径classes开始的路径信息-->
         <package name="com.quanrong.settings.dao"/>
+        <package name="com.quanrong.workbench.dao"/>
     </mappers>
 </configuration>
