@@ -2,8 +2,6 @@ package com.quanrong.workbench.controller;
 
 import com.quanrong.VO.PaginationVO;
 import com.quanrong.settings.domain.User;
-import com.quanrong.utils.DateUtil;
-import com.quanrong.utils.UUIDUtil;
 import com.quanrong.workbench.domian.Activity;
 import com.quanrong.workbench.service.ActivityService;
 import org.springframework.stereotype.Controller;
@@ -12,8 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("activity")
@@ -34,14 +31,37 @@ public class ActivityController {
         int result = service.saveActivity(activity);
         return result;
     }
-//    @RequestMapping("/pageList.do")
-//    @ResponseBody
-//    public PaginationVO<Activity> doPageList(HttpServletRequest request){
-//        Integer pageNo = Integer.valueOf(request.getParameter("pageNo"));
-//        Integer pageSize = Integer.valueOf(request.getParameter("pageSize"));
-//        Activity activity = new Activity();
-//        Integer total = 0;
-//        PaginationVO<Activity> vo = service.pageList(map);
-//        return vo;
-//    }
+    @RequestMapping("/pageList.do")
+    @ResponseBody
+    public PaginationVO<Activity> doPageList(HttpServletRequest request){
+        System.out.println("进入市场活动信息列表查询！");
+        Integer pageNo = Integer.valueOf(request.getParameter("pageNo"));
+        Integer pageSize = Integer.valueOf(request.getParameter("pageSize"));
+        Map map = new HashMap();
+        map.put("pageNo",pageNo);
+        map.put("pageSize",pageSize);
+        map.put("name",request.getParameter("name"));
+        map.put("owner",request.getParameter("owner"));
+        map.put("startDate",request.getParameter("startDate"));
+        map.put("endDate",request.getParameter("endDate"));
+        PaginationVO<Activity> vo = service.pageList(map);
+        return vo;
+    }
+    @RequestMapping("/delActivity.do")
+    @ResponseBody
+    public int doDelActivity(HttpServletRequest request){
+        String[] ids = request.getParameterValues("ids");
+        int result = service.delActivity(ids);
+        return result;
+    }
+    @RequestMapping("/getActivity.do")
+    @ResponseBody
+    public Map<String,Object> doGetActivity(String id){
+        Map<String,Object> map = new HashMap<>();
+        List<User> userList = service.getUserList();
+        Activity activity = service.getActivity(id);
+        map.put("userList",userList);
+        map.put("activity",activity);
+        return map;
+    }
 }

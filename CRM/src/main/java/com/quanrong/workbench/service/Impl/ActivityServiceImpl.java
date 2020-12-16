@@ -1,5 +1,8 @@
 package com.quanrong.workbench.service.Impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.quanrong.VO.PaginationVO;
 import com.quanrong.settings.domain.User;
 import com.quanrong.utils.DateUtil;
 import com.quanrong.utils.UUIDUtil;
@@ -30,10 +33,29 @@ public class ActivityServiceImpl implements ActivityService {
         return result;
     }
 
-//    @Override
-//    public List<Activity> pageList(Map map) {
-//        List<Activity> dataList = dao.pageList(map);
-//        map.put("total",)
-//        return null;
-//    }
+    @Override
+    public PaginationVO<Activity> pageList(Map map) {
+        //使用PageHelper插件进行分页操作
+        Page page = PageHelper.startPage((Integer)map.get("pageNo"),(Integer)map.get("pageSize"));
+        List<Activity> dataList = dao.getActivityList(map);
+        PaginationVO<Activity> vo = new PaginationVO<>();
+        //Page对象的getTotal方法获取查询出来的总条数
+        vo.setTotal((int) page.getTotal());
+        vo.setDataList(dataList);
+        return vo;
+    }
+
+    @Override
+    public int delActivity(String[] ids) {
+        int result = dao.delActivity(ids);
+        return result;
+    }
+
+    @Override
+    public Activity getActivity(String id) {
+        Activity activity = dao.getActivity(id);
+        return activity;
+    }
+
+
 }
