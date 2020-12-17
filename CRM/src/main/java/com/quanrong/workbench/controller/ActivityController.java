@@ -64,4 +64,10 @@ public class ActivityController {
         map.put("activity",activity);
         return map;
     }
+    @RequestMapping("/editActivity.do")
+    @ResponseBody
+    public int doEditActivity(Activity activity){
+        int result = service.editActivity(activity);
+        return result;
+    }
 }

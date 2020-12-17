@@ -159,9 +159,10 @@
 							if (element.name==data.activity.owner){
 								$("#edit-marketActivityOwner")
 										.append("<option value="+element.id+" selected>"+element.name+"</option>")
-							}
-							$("#edit-marketActivityOwner")
-									.append("<option value="+element.id+">"+element.name+"</option>")
+							}else{
+                                $("#edit-marketActivityOwner")
+                                    .append("<option value="+element.id+">"+element.name+"</option>")
+                            }
 						})
 						$("#edit-marketActivityName").val(data.activity.name);
 						$("#edit-startTime").val(data.activity.startDate);
@@ -173,6 +174,40 @@
 				})
 			}
 		})
+        //点击更新按钮，将数据更新到数据库当中
+        $("#editSaveBtn").click(function (){
+            var owner = $("#edit-marketActivityOwner").val();
+            var name = $.trim($("#edit-marketActivityName").val());
+            if (owner=="" || name==""){
+                alert("请至少输入所有者和名称！！")
+                return false;
+            }
+            $.ajax({
+                url:"activity/editActivity.do",
+                type:"post",
+                data:{
+                    "id":$("input[name=select]:checked").val(),
+                    "owner":owner,
+                    "name":name,
+                    "startDate":$.trim($("#edit-startTime").val()),
+                    "endDate":$.trim($("#edit-endTime").val()),
+                    "cost":$.trim($("#edit-cost").val()),
+                    "description":$("#edit-describe").val(),
+                    "editBy":"${user.name}"
+                },
+                success(data){
+                    if (data==1){
+                        alert("修改成功！");
+                        //属性市场活动列表信息
+                        pageList(1,2);
+                        //关闭模态窗口，同时重置表单
+                        $("#editActivityModal").modal("hide");
+                    }else{
+                        alert("修改失败！请稍后重试！");
+                    }
+                }
+            })
+        })
 	});
 
 
@@ -205,7 +240,7 @@
 				$.each(data.dataList,function (index,element) {
 					html += '<tr class="active">'
 					html += '<td><input type="checkbox" name="select" value='+element.id+'></td>'
-					html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/activity/detail.jsp\';">'+element.name+'</a></td>'
+					html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/activity/detail.jsp?id='+element.id+'\';">'+element.name+'</a></td>'
 					html += '<td>'+element.owner+'</td>'
 					html += '<td>'+element.startDate+'</td>'
 					html += '<td>'+element.endDate+'</td>'
@@ -275,7 +310,7 @@
 							</div>
 							<label for="create-endTime" class="col-sm-2 control-label" >结束日期</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control  time" id="create-endTime" readonly>
+								<input type="text" class="form-control time" id="create-endTime" readonly>
 							</div>
 						</div>
                         <div class="form-group">
@@ -315,7 +350,7 @@
 				</div>
 				<div class="modal-body">
 				
-					<form class="form-horizontal" role="form">
+					<form class="form-horizontal" id="editActivity" role="form">
 					
 						<div class="form-group">
 							<label for="edit-marketActivityOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
@@ -360,15 +395,14 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">更新</button>
+					<button type="button" class="btn btn-primary" id="editSaveBtn">更新</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	
 	
-	
-	
+
 	<div>
 		<div style="position: relative; left: 10px; top: -10px;">
 			<div class="page-header">

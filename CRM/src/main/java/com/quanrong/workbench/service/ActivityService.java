@@ -17,4 +17,6 @@ public interface ActivityService {
     int delActivity(String[] ids);
 
     Activity getActivity(String id);
+
+    int editActivity(Activity activity);
 }

@@ -57,5 +57,13 @@ public class ActivityServiceImpl implements ActivityService {
         return activity;
     }
 
+    @Override
+    public int editActivity(Activity activity) {
+        String editTime = DateUtil.getSystemTime();
+        activity.setEditTime(editTime);
+        int result = dao.editActivity(activity);
+        return result;
+    }
+
 
 }
