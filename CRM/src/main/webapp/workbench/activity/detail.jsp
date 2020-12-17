@@ -141,7 +141,34 @@
 				}
 			})
 		})
+
+		//点击备注的保存按键，向后台保存数据
+		$("#addRemark").click(function (){
+			var noteContent = $.trim($("#remark").val());
+			if (noteContent==""){
+				alert("请输入备注信息！");
+				return false;
+			}
+			$.ajax({
+				url:"activityRemark/saveRemark.do",
+				type:"post",
+				data:{
+					"noteContent":noteContent,
+					"createBy":"${user.name}",
+					"activityId":currentActivity.id
+				},
+				success(data){
+					if (data==1){
+						alert("提交成功！");
+						$("#remark").val("");
+					}else{
+						alert("提交失败，请稍后重试！");
+					}
+				}
+			})
+		})
 	});
+
 
 	//定义一个方法，加载当前页面对应的活动信息
 	function getActivity(){
@@ -156,15 +183,16 @@
 				currentActivity = data.activity;
 				$(".name").html(currentActivity.name);
 				$("#date").html(currentActivity.startDate+'~'+currentActivity.endDate);
-				$("#owner").html(currentActivity.owner);
-				$("#startDate").html(currentActivity.startDate);
-				$("#endDate").html(currentActivity.endDate);
-				$("#cost").html(currentActivity.cost);
-				$("#createBy").html(currentActivity.createBy+'&nbsp;&nbsp;');
-				$("#createTime").html(currentActivity.createTime);
-				$("#editBy").html(currentActivity.editBy+'&nbsp;&nbsp;');
-				$("#editTime").html(currentActivity.editTime);
-				$("#describe").html(currentActivity.description);
+				activityMessage = $(".activityMessage");
+				//将所有的放活动信息的标签放入一个类中，获取这个类的JQuery数组对象
+				$.each(activityMessage,function (index,element) {
+					$.each(currentActivity,function (key,values){
+						//当JQuery数组中的对象的id的值和获取的活动JSON对象的属性名一致的时候进行赋值
+						if (element.id==key){
+							$(element).html(values);
+						}
+					})
+				})
 			}
 		})
 	}
@@ -286,40 +314,40 @@
 	<div style="position: relative; top: -70px;">
 		<div style="position: relative; left: 40px; height: 30px;">
 			<div style="width: 300px; color: #808080;">所有者</div>
-			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b id="owner"></b></div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;" ><b class="activityMessage" id="owner"></b></div>
 			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">名称</div>
-			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b class="name"></b></div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;" ><b class="activityMessage" id="name"></b></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
 		</div>
 
 		<div style="position: relative; left: 40px; height: 30px; top: 10px;">
 			<div style="width: 300px; color: gray;">开始日期</div>
-			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b id="startDate"></b></div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;" ><b class="activityMessage" id="startDate"></b></div>
 			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">结束日期</div>
-			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b id="endDate"></b></div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;" ><b class="activityMessage" id="endDate"></b></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 20px;">
 			<div style="width: 300px; color: gray;">成本</div>
-			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b id="cost"></b></div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;" ><b class="activityMessage" id="cost"></b></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -20px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 30px;">
 			<div style="width: 300px; color: gray;">创建者</div>
-			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b id="createBy"></b><small style="font-size: 10px; color: gray;" id="createTime"></small></div>
+			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b class="activityMessage" id="createBy"></b><small style="font-size: 10px; color: gray;" class="activityMessage" id="createTime"></small></div>
 			<div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; top: -20px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 40px;">
 			<div style="width: 300px; color: gray;">修改者</div>
-			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b id="editBy"></b><small style="font-size: 10px; color: gray;" id="editTime"></small></div>
+			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b class="activityMessage" id="editBy"></b><small style="font-size: 10px; color: gray;" class="activityMessage" id="editTime"></small></div>
 			<div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; top: -20px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 50px;">
 			<div style="width: 300px; color: gray;">描述</div>
 			<div style="width: 630px;position: relative; left: 200px; top: -20px;">
-				<b id="describe"></b>
+				<b class="activityMessage" id="description"></b>
 			</div>
 			<div style="height: 1px; width: 850px; background: #D5D5D5; position: relative; top: -20px;"></div>
 		</div>
@@ -364,7 +392,7 @@
 				<textarea id="remark" class="form-control" style="width: 850px; resize : none;" rows="2"  placeholder="添加备注..."></textarea>
 				<p id="cancelAndSaveBtn" style="position: relative;left: 737px; top: 10px; display: none;">
 					<button id="cancelBtn" type="button" class="btn btn-default">取消</button>
-					<button type="button" class="btn btn-primary">保存</button>
+					<button type="button" class="btn btn-primary" id="addRemark">保存</button>
 				</p>
 			</form>
 		</div>

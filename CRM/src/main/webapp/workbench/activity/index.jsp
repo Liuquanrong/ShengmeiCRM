@@ -27,6 +27,7 @@
 	$(function(){
 		//页面加载完毕获取活动列表中的数据
 		pageList(1,2);
+
 		//点击创建按钮，弹出模态窗口
 		$("#addBtn").click(function (){
 			//导入时间拾取器
@@ -56,6 +57,7 @@
 				}
 			})
 		})
+
 		//保存市场活动记录
 		$("#saveBtn").click(function (){
 			var owner = $("#create-marketActivityOwner").val();
@@ -90,6 +92,7 @@
 				}
 			})
 		})
+
 		//点击查询按钮，执行对应的信息查询
 		$("#searchBtn").click(function (){
 			//每一次点击查询按钮的时候，我们应该使用隐藏域将搜索框中的信息保存起来
@@ -99,15 +102,18 @@
 			$("#hidden-endDate").val($.trim($("#search-endDate").val()));
 			pageList(1,2);
 		})
+
 		//点击全选的复选框按钮，触发全选操作
 		$("#selectAll").click(function (){
 			$("input[name=select]").prop("checked",this.checked);
 		})
+
 		//动态生成的元素，需要使用on方法绑定事件
 		// $(需要绑定元素的有效外层元素).on(绑定事件的方式，需要绑定元素的JQuery对象，回调函数)
 		$("#activityBody").on("click",$("input[name=select]"),function (){
 			$("#selectAll").prop("checked",$("input[name=select]").length==$("input[name=select]:checked").length);
 		})
+
 		//为删除按钮绑定事件，执行市场活动的删除
 		$("#deleteBtn").click(function (){
 			//获取所有选中的市场活动JQuery对象
@@ -131,8 +137,8 @@
 				})
 			}
 		})
+
 		//点击修改按钮，弹出修改模态窗口
-		//点击创建按钮，弹出模态窗口
 		$("#editBtn").click(function (){
 			if ($("input[name=select]:checked").length!=1){
 				alert("请选择一个活动进行修改！");
@@ -174,6 +180,7 @@
 				})
 			}
 		})
+
         //点击更新按钮，将数据更新到数据库当中
         $("#editSaveBtn").click(function (){
             var owner = $("#edit-marketActivityOwner").val();

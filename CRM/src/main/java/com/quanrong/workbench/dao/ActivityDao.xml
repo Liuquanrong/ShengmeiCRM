@@ -41,7 +41,8 @@
     </delete>
 
     <select id="getActivity" resultType="Activity">
-        select u.name owner,a.* from tbl_activity a join tbl_user u on a.owner=u.id where a.id=#{id};
+        select u.name owner,a.id,a.name,a.startDate,a.endDate,a.cost,a.createTime,a.createBy,a.description,a.editTime,a.editBy
+        from tbl_activity a join tbl_user u on a.owner=u.id where a.id=#{id};
     </select>
 
     <update id="editActivity">
