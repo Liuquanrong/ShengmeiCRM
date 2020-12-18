@@ -8,6 +8,7 @@ import com.quanrong.utils.DateUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,5 +32,27 @@ public class UserServiceImpl implements UserService {
             throw new LoginException("非法的IP地址访问！");
         }
         return user;
+    }
+
+    @Override
+    public Map editPwd(Map<String, String> data, HttpServletRequest request) {
+        Map map = new HashMap<>();
+        map.put("success",false);
+        User user = (User) request.getSession().getAttribute("user");
+        String userLoginPwd = user.getLoginPwd();
+        String loginPwd = data.get("loginPwd");
+        String oldPwd = data.get("oldPwd");
+        if (!oldPwd.equals(userLoginPwd)){
+            map.put("msg","原密码错误！");
+            return map;
+        }else if (oldPwd.equals(loginPwd)){
+            map.replace("msg","新旧密码不能一样！");
+            return map;
+        }
+        int result = userDao.editPwd(data);
+        if (result==1){
+            map.replace("success",true);
+        }
+        return map;
     }
 }

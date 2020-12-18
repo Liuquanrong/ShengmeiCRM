@@ -22,6 +22,7 @@
 	var cancelAndSaveBtnDefault = true;
 	
 	$(function(){
+
 		$("#remark").focus(function(){
 			if(cancelAndSaveBtnDefault){
 				//设置remarkDiv的高度为130px
@@ -56,7 +57,8 @@
 			$(this).children("span").css("color","#E6E6E6");
 		});
 
-		//获取当前活动的信息
+
+		//当前活动加载完毕后获取当前活动的备注信息
 		getActivity();
 
 		//点击编辑按钮打开修改模态窗口
@@ -155,7 +157,8 @@
 				data:{
 					"noteContent":noteContent,
 					"createBy":"${user.name}",
-					"activityId":currentActivity.id
+					"activityId":currentActivity.id,
+					"editFlag":'0'
 				},
 				success(data){
 					if (data==1){
@@ -169,18 +172,19 @@
 		})
 	});
 
-
 	//定义一个方法，加载当前页面对应的活动信息
 	function getActivity(){
 		$.ajax({
 			url:"activity/getActivity.do",
 			type:"get",
 			data:{
+				//从请求连接中获取请求的活动的id
 				"id":"${param.id}"
 			},
 			success(data){
 				userList = data.userList;
 				currentActivity = data.activity;
+				//对顶部信息的处理
 				$(".name").html(currentActivity.name);
 				$("#date").html(currentActivity.startDate+'~'+currentActivity.endDate);
 				activityMessage = $(".activityMessage");
@@ -196,6 +200,62 @@
 			}
 		})
 	}
+
+	// //定义分页方法
+	// function pageList(pageNo,pageSize){
+	// 	$.ajax({
+	// 		url:"activityRemark/pageList.do",
+	// 		type:"get",
+	// 		data:{
+	// 			"activityId":currentActivity.id,
+	// 			"pageNo":pageNo,
+	// 			"pageSize":pageSize
+	// 		},
+	// 		success(data){
+	// 			var html = "";
+	// 			$.each(data.dataList,function (index,element){
+	// 				html += '<div class="remarkDiv" style="height: 60px;">';
+	// 				if (element.editFlag=='0'){
+	// 					html += '<img title='+element.createBy+' src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
+	// 				}else{
+	// 					html += '<img title='+element.editBy+' src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
+	// 				}
+	// 				html += '<div style="position: relative; top: -40px; left: 40px;" >';
+	// 				html += '<h5>'+element.noteContent+'</h5>';
+	// 				html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>'+currentActivity.name+'</b>';
+	// 				if (element.editFlag=='0'){
+	// 					html += '<small style="color: gray;"> '+element.createTime+' 由'+element.createBy+'</small>';
+	// 				}else{
+	// 					html += '<small style="color: gray;"> '+element.editTime+' 由'+element.editBy+'</small>';
+	// 				}
+	// 				html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
+	// 				html += '<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #E6E6E6;"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;';
+	// 				html += '<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #E6E6E6;"></span></a>';
+	// 				html += '</div></div></div>';
+	// 			})
+	// 			$("#remarkDivs").html(html);
+	// 			//计算总页数
+	// 			var totalPages = data.total%pageSize==0?data.total/pageSize:parseInt(data.total/pageSize)+1;
+	// 			//数据处理完毕后，结合分页插件对前端展现分页信息
+	// 			$("#activityRemarkPage").bs_pagination({
+	// 				currentPage: pageNo,
+	// 				rowsPerPage: pageSize,
+	// 				maxRowsPerPage: 20,
+	// 				totalPages: totalPages,
+	// 				totalRows: data.total,
+	// 				visiblePageLinks: 3,
+	// 				showGoToPage: true,
+	// 				showRowsPerPage: true,
+	// 				showRowsInfo: true,
+	// 				showRowsDefaultInfo: true,
+	// 				//该回调函数是我们在调用分页组件的时候触发
+	// 				onChangePage: function (event,data) {
+	// 					pageList(data.currentPage,data.rowsPerPage);
+	// 				}
+	// 			});
+	// 		}
+	// 	})
+	// }
 	
 </script>
 
@@ -358,33 +418,38 @@
 		<div class="page-header">
 			<h4>备注</h4>
 		</div>
-		
-		<!-- 备注1 -->
-		<div class="remarkDiv" style="height: 60px;">
-			<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">
-			<div style="position: relative; top: -40px; left: 40px;" >
-				<h5>哎呦！</h5>
-				<font color="gray">市场活动</font> <font color="gray">-</font> <b>发传单</b> <small style="color: gray;"> 2017-01-22 10:10:10 由zhangsan</small>
-				<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">
-					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #E6E6E6;"></span></a>
-					&nbsp;&nbsp;&nbsp;&nbsp;
-					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #E6E6E6;"></span></a>
-				</div>
-			</div>
+		<div id="remarkDivs">
+
 		</div>
+<%--		<!-- 备注1 -->--%>
+<%--		<div class="remarkDiv" style="height: 60px;">--%>
+<%--			<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">--%>
+<%--			<div style="position: relative; top: -40px; left: 40px;" >--%>
+<%--				<h5>哎呦！</h5>--%>
+<%--				<font color="gray">市场活动</font> <font color="gray">-</font> <b>发传单</b> <small style="color: gray;"> 2017-01-22 10:10:10 由zhangsan</small>--%>
+<%--				<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">--%>
+<%--					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #E6E6E6;"></span></a>--%>
+<%--					&nbsp;&nbsp;&nbsp;&nbsp;--%>
+<%--					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #E6E6E6;"></span></a>--%>
+<%--				</div>--%>
+<%--			</div>--%>
+<%--		</div>--%>
 		
 		<!-- 备注2 -->
-		<div class="remarkDiv" style="height: 60px;">
-			<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">
-			<div style="position: relative; top: -40px; left: 40px;" >
-				<h5>呵呵！</h5>
-				<font color="gray">市场活动</font> <font color="gray">-</font> <b>发传单</b> <small style="color: gray;"> 2017-01-22 10:20:10 由zhangsan</small>
-				<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">
-					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #E6E6E6;"></span></a>
-					&nbsp;&nbsp;&nbsp;&nbsp;
-					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #E6E6E6;"></span></a>
-				</div>
-			</div>
+<%--		<div class="remarkDiv" style="height: 60px;">--%>
+<%--			<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">--%>
+<%--			<div style="position: relative; top: -40px; left: 40px;" >--%>
+<%--				<h5>呵呵！</h5>--%>
+<%--				<font color="gray">市场活动</font> <font color="gray">-</font> <b>发传单</b> <small style="color: gray;"> 2017-01-22 10:20:10 由zhangsan</small>--%>
+<%--				<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">--%>
+<%--					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #E6E6E6;"></span></a>--%>
+<%--					&nbsp;&nbsp;&nbsp;&nbsp;--%>
+<%--					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #E6E6E6;"></span></a>--%>
+<%--				</div>--%>
+<%--			</div>--%>
+<%--		</div>--%>
+		<div style="height: 50px; position: relative;top: 30px;">
+			<div id="activityRemarkPage"></div>
 		</div>
 		
 		<div id="remarkDiv" style="background-color: #E6E6E6; width: 870px; height: 90px;">

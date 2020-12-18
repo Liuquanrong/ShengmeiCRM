@@ -7,4 +7,8 @@
     <select id="login" resultType="User">
         select * from tbl_user where loginAct= #{loginAct} and loginPwd=#{loginPwd};
     </select>
+
+    <update id="editPwd">
+        update tbl_user set loginPwd=#{loginPwd} where id=#{id};
+    </update>
 </mapper>

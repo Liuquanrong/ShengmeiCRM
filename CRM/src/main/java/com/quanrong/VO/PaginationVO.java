@@ -22,11 +22,4 @@ public class PaginationVO<T> {
         this.dataList = dataList;
     }
 
-    @Override
-    public String toString() {
-        return "PaginationVO{" +
-                "total=" + total +
-                ", dataList=" + dataList +
-                '}';
-    }
 }

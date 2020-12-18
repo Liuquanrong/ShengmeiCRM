@@ -247,6 +247,7 @@
 				$.each(data.dataList,function (index,element) {
 					html += '<tr class="active">'
 					html += '<td><input type="checkbox" name="select" value='+element.id+'></td>'
+					//当点击活动名称的时候跳转到详细界面，同时携带活动的id编号，用于detail.jsp界面获取活动信息
 					html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/activity/detail.jsp?id='+element.id+'\';">'+element.name+'</a></td>'
 					html += '<td>'+element.owner+'</td>'
 					html += '<td>'+element.startDate+'</td>'

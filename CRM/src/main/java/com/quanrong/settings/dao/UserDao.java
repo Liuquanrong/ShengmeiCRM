@@ -6,4 +6,6 @@ import java.util.Map;
 
 public interface UserDao {
     User login(Map<String,String> user);
+
+    int editPwd(Map<String,String> data);
 }

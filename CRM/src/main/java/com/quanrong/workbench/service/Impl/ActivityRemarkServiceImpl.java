@@ -1,5 +1,8 @@
 package com.quanrong.workbench.service.Impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.quanrong.VO.PaginationVO;
 import com.quanrong.utils.DateUtil;
 import com.quanrong.utils.UUIDUtil;
 import com.quanrong.workbench.dao.ActivityRemarkDao;
@@ -8,6 +11,9 @@ import com.quanrong.workbench.service.ActivityRemarkService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class ActivityRemarkServiceImpl implements ActivityRemarkService {
@@ -22,5 +28,17 @@ public class ActivityRemarkServiceImpl implements ActivityRemarkService {
         remark.setCreateTime(createTime);
         int result = dao.saveRemark(remark);
         return result;
+    }
+
+    @Override
+    public PaginationVO getPageList(String activityId,String pageNo, String pageSize) {
+        Map<String, Object> map = new HashMap<>();
+        PaginationVO vo = new PaginationVO();
+        Page page = PageHelper.startPage(Integer.valueOf(pageNo),Integer.valueOf(pageNo));
+        List<ActivityRemark> dataList = dao.getActivityRemarkList();
+        int total = (int) page.getTotal();
+        vo.setDataList(dataList);
+        vo.setTotal(total);
+        return vo;
     }
 }

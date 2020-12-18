@@ -8,4 +8,8 @@
         insert into tbl_activity_remark values (#{id},#{noteContent},#{createTime},
         #{createBy},#{editTime},#{editBy},#{editFlag},#{activityId})
     </insert>
+
+    <select id="getActivityRemarkList" resultType="ActivityRemark">
+        select * from tbl_activity_remark where activityId=#{activityId}
+    </select>
 </mapper>
