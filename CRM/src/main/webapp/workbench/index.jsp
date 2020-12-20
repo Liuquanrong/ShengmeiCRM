@@ -52,6 +52,10 @@
 			var oldPwd = $.trim($("#oldPwd").val());
 			var newPwd = $.trim($("#newPwd").val());
 			var confirmPwd = $.trim($("#confirmPwd").val());
+			if (newPwd == ''){
+			    alert("请输入新密码！");
+			    return false;
+            }
 			if (newPwd != confirmPwd) {
 				alert("新密码和确认密码不一致！");
 				$("#confirmPwd").focus();

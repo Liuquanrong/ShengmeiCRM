@@ -21,10 +21,32 @@ public class ActivityRemarkController {
         int result = service.saveRemark(remark);
         return result;
     }
+
     @RequestMapping("pageList.do")
     @ResponseBody
     public PaginationVO doPageList(String activityId, String pageNo, String pageSize){
         PaginationVO vo = service.getPageList(activityId,pageNo,pageSize);
         return vo;
+    }
+
+    @RequestMapping("delRemark.do")
+    @ResponseBody
+    public int doDelRemark(String id){
+        int result = service.delRemark(id);
+        return result;
+    }
+
+    @RequestMapping("getRemark.do")
+    @ResponseBody
+    public ActivityRemark doGetRemark(String id){
+        ActivityRemark remark = service.getRemark(id);
+        return remark;
+    }
+
+    @RequestMapping("editRemark.do")
+    @ResponseBody
+    public int doEditRemark(ActivityRemark remark){
+        int result = service.editRemark(remark);
+        return result;
     }
 }

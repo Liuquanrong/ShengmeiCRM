@@ -43,22 +43,21 @@
 			cancelAndSaveBtnDefault = true;
 		});
 
-		$("#remarkDivs").on("mouseover",$(".remarkDiv"),function (){
-            $(".remarkDiv").children("div").children("div").children("div").show();
+		$("#remarkDivs").on("mouseover",".remarkDiv",function (){
+            $(this).children("div").children("div").show();
         })
 
 
-        $("#remarkDivs").on("mouseout",$(".remarkDiv"),function (){
-            $(".remarkDiv").children("div").children("div").hide();
+        $("#remarkDivs").on("mouseout",".remarkDiv",function (){
+            $(this).children("div").children("div").hide();
         })
 
-        $("#remarkDivs").on("mouseover",$(".myHref"),function (){
-            $(".myHref").children("span").css("color"
-                ,"red");
+        $("#remarkDivs").on("mouseover",".myHref",function (){
+            $(this).children("span").css("color","red");
         })
 
-        $("#remarkDivs").on("mouseout",$(".myHref"),function (){
-            $(".myHref").children("span").css("color","#E6E6E6");
+        $("#remarkDivs").on("mouseout",".myHref",function (){
+            $(this).children("span").css("color","#E6E6E6");
         })
 
 		//当前活动加载完毕后获取当前活动的备注信息
@@ -142,8 +141,12 @@
 				},
 				traditional: true,
 				success(data) {
-					alert("删除成功！");
-					window.location.href="workbench/activity/index.jsp";
+					if (data==1){
+						alert("删除成功！");
+						window.location.href="workbench/activity/index.jsp";
+					}else{
+						alert("删除失败！")
+					}
 				}
 			})
 		})
@@ -171,6 +174,32 @@
 						pageList(1,2);
 					}else{
 						alert("提交失败，请稍后重试！");
+					}
+				}
+			})
+		})
+
+		//点击备注修改模态窗口的更新按钮，更新备注信息
+		$("#updateRemarkBtn").click(function (){
+			//从隐藏域中获取当前备注的id值
+			var id = $("#remarkId").val();
+			var noteContent = $("#noteContent").val();
+			$.ajax({
+				url:"activityRemark/editRemark.do",
+				type:"post",
+				data:{
+					"id":id,
+					"noteContent": noteContent,
+					"editFlag":'1',
+					"editBy":'${user.name}'
+				},
+				success(data){
+					if (data==1){
+						alert("修改成功！");
+						pageList(1,2);
+						$("#editRemarkModal").modal('hide');
+					}else{
+						alert("修改失败，请稍后重试！");
 					}
 				}
 			})
@@ -220,7 +249,7 @@
 			success(data){
 				var html = "";
 				$.each(data.dataList,function (index,element){
-					html += '<div class="remarkDiv" style="height: 60px;">';
+					html += '<div class="remarkDiv"  style="height: 60px;">';
 					if (element.editFlag=='0'){
 						html += '<img title='+element.createBy+' src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
 					}else{
@@ -230,13 +259,14 @@
 					html += '<h5>'+element.noteContent+'</h5>';
 					html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>'+currentActivity.name+'</b>';
 					if (element.editFlag=='0'){
-						html += '<small style="color: gray;"> '+element.createTime+' 由 '+element.createBy+'</small>';
+						html += '<small style="color: gray;"> '+element.createTime+' create by '+element.createBy+'</small>';
 					}else{
-						html += '<small style="color: gray;"> '+element.editTime+' 由 '+element.editBy+'</small>';
+						html += '<small style="color: gray;"> '+element.editTime+' edit by '+element.editBy+'</small>';
 					}
 					html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
-					html += '<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #E6E6E6;"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;';
-					html += '<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #E6E6E6;"></span></a>';
+					//动态生成的元素绑定事件传入参数需要以字符的形式传入('传入参数<字符串形式>')
+					html += '<a class="myHref" href="javascript:void(0);" onclick="editRemark(\''+element.id+'\')"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #E6E6E6;"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;';
+					html += '<a class="myHref" href="javascript:void(0);" onclick="delRemark(\''+element.id+'\')"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #E6E6E6;"></span></a>';
 					html += '</div></div></div>';
 				})
 				$("#remarkDivs").html(html);
@@ -262,6 +292,43 @@
 			}
 		})
 	}
+
+	//定义删除备注的方法
+	function delRemark(id){
+		$.ajax({
+			url:"activityRemark/delRemark.do",
+			type:"post",
+			data:{
+				"id":id
+			},
+			success(data){
+				if (data==1){
+					pageList(1,2);
+				}else{
+					alert("删除失败，请稍后重试！");
+				}
+			}
+		})
+	}
+
+	//点击修改图标打开修改备注的模态窗口
+	function editRemark(id){
+		//将当前备注的id值放入隐藏域当中
+		$("#remarkId").val(id);
+		$.ajax({
+			url:"activityRemark/getRemark.do",
+			type:"get",
+			data:{
+				"id":id
+			},
+			success(data){
+				$("#noteContent").val(data.noteContent);
+			}
+		})
+		$("#editRemarkModal").modal("show");
+	}
+
+
 	
 </script>
 

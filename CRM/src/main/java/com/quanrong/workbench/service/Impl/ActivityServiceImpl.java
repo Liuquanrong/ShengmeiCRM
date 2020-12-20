@@ -7,6 +7,7 @@ import com.quanrong.settings.domain.User;
 import com.quanrong.utils.DateUtil;
 import com.quanrong.utils.UUIDUtil;
 import com.quanrong.workbench.dao.ActivityDao;
+import com.quanrong.workbench.dao.ActivityRemarkDao;
 import com.quanrong.workbench.domian.Activity;
 import com.quanrong.workbench.service.ActivityService;
 import org.springframework.stereotype.Service;
@@ -18,10 +19,12 @@ import java.util.Map;
 @Service
 public class ActivityServiceImpl implements ActivityService {
     @Resource
-    ActivityDao dao;
+    ActivityDao activityDao;
+    @Resource
+    ActivityRemarkDao remarkDao;
     @Override
     public List<User> getUserList() {
-        List<User> userList = dao.getUserList();
+        List<User> userList = activityDao.getUserList();
         return userList;
     }
 
@@ -29,7 +32,7 @@ public class ActivityServiceImpl implements ActivityService {
     public int saveActivity(Activity activity) {
         activity.setId(UUIDUtil.getUUID());
         activity.setCreateTime(DateUtil.getSystemTime());
-        int result = dao.saveActivity(activity);
+        int result = activityDao.saveActivity(activity);
         return result;
     }
 
@@ -37,7 +40,7 @@ public class ActivityServiceImpl implements ActivityService {
     public PaginationVO<Activity> pageList(Map map) {
         //使用PageHelper插件进行分页操作
         Page page = PageHelper.startPage((Integer)map.get("pageNo"),(Integer)map.get("pageSize"));
-        List<Activity> dataList = dao.getActivityList(map);
+        List<Activity> dataList = activityDao.getActivityList(map);
         PaginationVO<Activity> vo = new PaginationVO<>();
         //Page对象的getTotal方法获取查询出来的总条数
         vo.setTotal((int) page.getTotal());
@@ -46,14 +49,15 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public int delActivity(String[] ids) {
-        int result = dao.delActivity(ids);
+    public int delActivity(String[] ids){
+        int result = activityDao.delActivity(ids);
+        remarkDao.delRemarks(ids);
         return result;
     }
 
     @Override
     public Activity getActivity(String id) {
-        Activity activity = dao.getActivity(id);
+        Activity activity = activityDao.getActivity(id);
         return activity;
     }
 
@@ -61,9 +65,7 @@ public class ActivityServiceImpl implements ActivityService {
     public int editActivity(Activity activity) {
         String editTime = DateUtil.getSystemTime();
         activity.setEditTime(editTime);
-        int result = dao.editActivity(activity);
+        int result = activityDao.editActivity(activity);
         return result;
     }
-
-
 }

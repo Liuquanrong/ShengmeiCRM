@@ -9,7 +9,27 @@
         #{createBy},#{editTime},#{editBy},#{editFlag},#{activityId})
     </insert>
 
+    <delete id="delRemarks">
+        delete from tbl_activity_remark where activityId in
+        <foreach collection="array" item="activityId" open="(" separator="," close=")">
+            #{activityId}
+        </foreach>
+    </delete>
+
     <select id="getActivityRemarkList" resultType="ActivityRemark">
-        select * from tbl_activity_remark where activityId=#{activityId} order by createTime desc
+        select * from tbl_activity_remark where activityId=#{activityId} order by 
+        ifnull(editTime,createTime) desc
+    </select>
+
+    <delete id="delRemark">
+        delete from tbl_activity_remark where id=#{id}
+    </delete>
+
+    <update id="editRemark">
+        update tbl_activity_remark set noteContent=#{noteContent},editBy=#{editBy},editTime=#{editTime},editFlag=#{editFlag} where id=#{id}
+    </update>
+
+    <select id="getRemark" resultType="ActivityRemark">
+        select id,noteContent from tbl_activity_remark where id=#{id}
     </select>
 </mapper>

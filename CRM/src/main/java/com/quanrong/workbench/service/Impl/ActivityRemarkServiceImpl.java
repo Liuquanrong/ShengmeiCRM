@@ -11,14 +11,12 @@ import com.quanrong.workbench.service.ActivityRemarkService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ActivityRemarkServiceImpl implements ActivityRemarkService {
     @Resource
-    ActivityRemarkDao dao;
+    ActivityRemarkDao remarkDao;
 
     @Override
     public int saveRemark(ActivityRemark remark) {
@@ -26,7 +24,7 @@ public class ActivityRemarkServiceImpl implements ActivityRemarkService {
         String id = UUIDUtil.getUUID();
         remark.setId(id);
         remark.setCreateTime(createTime);
-        int result = dao.saveRemark(remark);
+        int result = remarkDao.saveRemark(remark);
         return result;
     }
 
@@ -34,10 +32,30 @@ public class ActivityRemarkServiceImpl implements ActivityRemarkService {
     public PaginationVO getPageList(String activityId, String pageNo, String pageSize) {
         PaginationVO vo = new PaginationVO();
         Page page = PageHelper.startPage(Integer.valueOf(pageNo),Integer.valueOf(pageSize));
-        List<ActivityRemark> dataList = dao.getActivityRemarkList(activityId);
+        List<ActivityRemark> dataList = remarkDao.getActivityRemarkList(activityId);
         int total = (int) page.getTotal();
         vo.setDataList(dataList);
         vo.setTotal(total);
         return vo;
     }
+
+    @Override
+    public int delRemark(String id) {
+        int result = remarkDao.delRemark(id);
+        return result;
+    }
+
+    @Override
+    public int editRemark(ActivityRemark remark) {
+        remark.setEditTime(DateUtil.getSystemTime());
+        int result = remarkDao.editRemark(remark);
+        return result;
+    }
+
+    @Override
+    public ActivityRemark getRemark(String id) {
+        ActivityRemark remark =  remarkDao.getRemark(id);
+        return remark;
+    }
+
 }

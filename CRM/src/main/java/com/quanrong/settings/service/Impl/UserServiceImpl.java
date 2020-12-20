@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
             map.put("msg","原密码错误！");
             return map;
         }else if (oldPwd.equals(loginPwd)){
-            map.replace("msg","新旧密码不能一样！");
+            map.put("msg","新旧密码不能一样！");
             return map;
         }
         int result = userDao.editPwd(data);
