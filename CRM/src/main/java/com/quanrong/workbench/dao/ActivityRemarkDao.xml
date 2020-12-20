@@ -10,6 +10,6 @@
     </insert>
 
     <select id="getActivityRemarkList" resultType="ActivityRemark">
-        select * from tbl_activity_remark where activityId=#{activityId}
+        select * from tbl_activity_remark where activityId=#{activityId} order by createTime desc
     </select>
 </mapper>

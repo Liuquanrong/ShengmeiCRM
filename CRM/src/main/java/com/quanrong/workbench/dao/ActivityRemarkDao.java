@@ -7,5 +7,5 @@ import java.util.List;
 public interface ActivityRemarkDao {
     int saveRemark(ActivityRemark remark);
 
-    List<ActivityRemark> getActivityRemarkList();
+    List<ActivityRemark> getActivityRemarkList(String activityId);
 }

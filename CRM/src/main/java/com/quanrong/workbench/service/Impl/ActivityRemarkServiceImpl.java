@@ -31,11 +31,10 @@ public class ActivityRemarkServiceImpl implements ActivityRemarkService {
     }
 
     @Override
-    public PaginationVO getPageList(String activityId,String pageNo, String pageSize) {
-        Map<String, Object> map = new HashMap<>();
+    public PaginationVO getPageList(String activityId, String pageNo, String pageSize) {
         PaginationVO vo = new PaginationVO();
-        Page page = PageHelper.startPage(Integer.valueOf(pageNo),Integer.valueOf(pageNo));
-        List<ActivityRemark> dataList = dao.getActivityRemarkList();
+        Page page = PageHelper.startPage(Integer.valueOf(pageNo),Integer.valueOf(pageSize));
+        List<ActivityRemark> dataList = dao.getActivityRemarkList(activityId);
         int total = (int) page.getTotal();
         vo.setDataList(dataList);
         vo.setTotal(total);
