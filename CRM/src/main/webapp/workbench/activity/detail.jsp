@@ -469,12 +469,12 @@
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 30px;">
 			<div style="width: 300px; color: gray;">创建者</div>
-			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b class="activityMessage" id="createBy"></b><small style="font-size: 10px; color: gray;" class="activityMessage" id="createTime"></small></div>
+			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b class="activityMessage" id="createBy"></b>&nbsp;&nbsp;<small style="font-size: 10px; color: gray;" class="activityMessage" id="createTime"></small></div>
 			<div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; top: -20px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 40px;">
 			<div style="width: 300px; color: gray;">修改者</div>
-			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b class="activityMessage" id="editBy"></b><small style="font-size: 10px; color: gray;" class="activityMessage" id="editTime"></small>&nbsp;</div>
+			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b class="activityMessage" id="editBy"></b>&nbsp;&nbsp;<small style="font-size: 10px; color: gray;" class="activityMessage" id="editTime"></small>&nbsp;</div>
 			<div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; top: -20px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 50px;">
