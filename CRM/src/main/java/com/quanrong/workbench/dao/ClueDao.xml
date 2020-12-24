@@ -4,9 +4,42 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.quanrong.workbench.dao.ClueDao">
-	
-	
-  	
+
+    <insert id="addClue">
+        insert into tbl_clue values (
+            #{id},#{fullname},#{appellation},#{owner},#{company},#{job},
+            #{email},#{phone},#{website},#{mphone},#{state},#{source},
+            #{createBy},#{createTime},#{editBy},#{editTime},#{description},
+            #{contactSummary},#{nextContactTime},#{address})
+    </insert>
+
+    <select id="getClueList" resultType="Clue">
+        select * from tbl_clue
+        <where>
+            <if test="fullname != null and fullname != ''">
+                fullname=#{fullname}
+            </if>
+            <if test="company != null and company != ''">
+                company=#{company}
+            </if>
+            <if test="phone != null and phone != ''">
+                phone=#{phone}
+            </if>
+            <if test="owner != null and owner != ''">
+                owner=#{owner}
+            </if>
+            <if test="source != null and source !=''">
+                source=#{source}
+            </if>
+            <if test="mphone != null and mphone != ''">
+                mphone=#{mphone}
+            </if>
+            <if test="clueState != null and clueState != ''"></if>
+                clueState=#{clueState}
+        </where>
+        order by createTime desc
+    </select>
+
 </mapper>
 
 

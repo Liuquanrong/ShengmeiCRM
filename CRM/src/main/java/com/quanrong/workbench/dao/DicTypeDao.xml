@@ -4,5 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace推荐使用dao层接口的全限定名称-->
 <mapper namespace="com.quanrong.workbench.dao.DicTypeDao">
-
+    <select id="getTypes" resultType="DicType">
+        select * from tbl_dic_type;
+    </select>
 </mapper>

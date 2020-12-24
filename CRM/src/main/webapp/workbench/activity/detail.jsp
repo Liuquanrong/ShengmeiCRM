@@ -25,6 +25,16 @@
 	
 	$(function(){
 
+		//导入时间时区器
+		$(".time").datetimepicker({
+			minView:"month",
+			language:"zh-CN",
+			format:"yyyy-mm-dd",
+			autoclose:true,
+			todayBtn:true,
+			pickerPosition:"bottom-left"
+		});
+
 		$("#remark").focus(function(){
 			if(cancelAndSaveBtnDefault){
 				//设置remarkDiv的高度为130px
@@ -66,15 +76,6 @@
 
 		//点击编辑按钮打开修改模态窗口
 		$("#editBtn").click(function (){
-			//导入时间时区器
-			$(".time").datetimepicker({
-				minView:"month",
-				language:"zh-CN",
-				format:"yyyy-mm-dd",
-				autoclose:true,
-				todayBtn:true,
-				pickerPosition:"botton-left"
-			});
 			//打开修改界面窗口的时候修改文本框中的内容
 			$("#edit-marketActivityOwner").empty();
 			$.each(userList,function (index,element){

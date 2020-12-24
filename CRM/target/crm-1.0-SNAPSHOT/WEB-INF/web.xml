@@ -27,7 +27,7 @@
     <!--声明登陆验证过滤器-->
     <filter>
         <filter-name>CheckFilter</filter-name>
-        <filter-class>com.quanrong.Filter.CheckFilter</filter-class>
+        <filter-class>com.quanrong.web.Filter.CheckFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>CheckFilter</filter-name>
@@ -56,5 +56,8 @@
     <!--注册spring的监听器对象-->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>com.quanrong.web.Listener.SysInitListener</listener-class>
     </listener>
 </web-app>

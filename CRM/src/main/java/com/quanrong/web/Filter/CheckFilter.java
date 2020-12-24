@@ -1,4 +1,4 @@
-package com.quanrong.Filter;
+package com.quanrong.web.Filter;
 
 import com.quanrong.settings.domain.User;
 

@@ -28,17 +28,18 @@
 		//页面加载完毕获取活动列表中的数据
 		pageList(1,2);
 
+		//导入时间拾取器
+		$(".time").datetimepicker({
+			minView:"month",
+			language:"zh-CN",
+			format:"yyyy-mm-dd",
+			autoclose:true,
+			todayBtn:true,
+			pickerPosition:"bottom-left"
+		});
+
 		//点击创建按钮，弹出模态窗口
 		$("#addBtn").click(function (){
-			//导入时间拾取器
-			$(".time").datetimepicker({
-				minView:"month",
-				language:"zh-CN",
-				format:"yyyy-mm-dd",
-				autoclose:true,
-				todayBtn:true,
-				pickerPosition:"botton-left"
-			});
 			//通过ajax请求，从后台获取用户信息列表
 			$.ajax({
 				url:"activity/getUserList.do",
