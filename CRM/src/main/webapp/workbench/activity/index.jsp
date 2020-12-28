@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<base href="<%=basePath%>">
+	<base href="<%=basePath%>"/>
 <meta charset="UTF-8">
 
 <link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
@@ -143,16 +143,7 @@
 		$("#editBtn").click(function (){
 			if ($("input[name=select]:checked").length!=1){
 				alert("请选择一个活动进行修改！");
-			}else{
-				//导入时间拾取器
-				$(".time").datetimepicker({
-					minView:"month",
-					language:"zh-CN",
-					format:"yyyy-mm-dd",
-					autoclose:true,
-					todayBtn:true,
-					pickerPosition:"botton-left"
-				});
+			}
 				//通过ajax请求，从后台获取当前修改的活动的信息
 				$.ajax({
 					url:"activity/getActivity.do",
@@ -179,8 +170,7 @@
 						$("#editActivityModal").modal("show");
 					}
 				})
-			}
-		})
+			})
 
         //点击更新按钮，将数据更新到数据库当中
         $("#editSaveBtn").click(function (){

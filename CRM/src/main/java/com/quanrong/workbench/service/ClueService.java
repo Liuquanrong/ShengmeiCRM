@@ -9,4 +9,10 @@ public interface ClueService {
     int addClue(Clue clue);
 
     PaginationVO<Clue> getPageList(Map<String, String> map);
+
+    int delClues(String[] ids);
+
+    Clue getClue(String id);
+
+    int updateClue(Clue clue);
 }

@@ -33,9 +33,28 @@ public class ClueServiceImpl implements ClueService {
         Integer pageNo = Integer.valueOf(map.get("pageNo"));
         Integer pageSize = Integer.valueOf(map.get("pageSize"));
         Page page = PageHelper.startPage(pageNo,pageSize);
-        vo.setTotal((int) page.getTotal());
         List<Clue> clueList = clueDao.getClueList(map);
+        vo.setTotal((int) page.getTotal());
         vo.setDataList(clueList);
-        return null;
+        return vo;
+    }
+
+    @Override
+    public int delClues(String[] ids) {
+        int result = clueDao.delClues(ids);
+        return result;
+    }
+
+    @Override
+    public Clue getClue(String id) {
+        Clue clue = clueDao.getClue(id);
+        return clue;
+    }
+
+    @Override
+    public int updateClue(Clue clue) {
+        clue.setEditTime(DateUtil.getSystemTime());
+        int result = clueDao.updateClue(clue);
+        return result;
     }
 }

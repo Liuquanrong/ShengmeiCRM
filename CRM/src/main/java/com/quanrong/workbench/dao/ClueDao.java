@@ -11,4 +11,10 @@ public interface ClueDao {
     int addClue(Clue clue);
 
     List<Clue> getClueList(Map<String, String> map);
+
+    int delClues(String[] ids);
+
+    Clue getClue(String id);
+
+    int updateClue(Clue clue);
 }

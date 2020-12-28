@@ -49,8 +49,33 @@ public class ClueController {
         map.put("source",request.getParameter("source"));
         map.put("owner",request.getParameter("owner"));
         map.put("mphone",request.getParameter("mphone"));
-        map.put("clueState",request.getParameter("cluState"));
+        map.put("state",request.getParameter("state"));
         PaginationVO<Clue> vo = clueService.getPageList(map);
         return vo;
+    }
+
+    @RequestMapping("delClues.do")
+    @ResponseBody
+    public int doDelClue(String[] ids){
+        int result = clueService.delClues(ids);
+        return result;
+    }
+
+    @RequestMapping("/getClue.do")
+    @ResponseBody
+    public Map<String,Object> doGetClue(String id){
+        List<User> userList = activityService.getUserList();
+        Clue clue = clueService.getClue(id);
+        Map<String,Object> map = new HashMap<>();
+        map.put("userList",userList);
+        map.put("clue",clue);
+        return map;
+    }
+
+    @RequestMapping("/editClue.do")
+    @ResponseBody
+    public int doEditClue(Clue clue){
+        int result = clueService.updateClue(clue);
+        return result;
     }
 }
