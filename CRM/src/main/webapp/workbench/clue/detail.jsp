@@ -192,6 +192,34 @@
             })
 		})
 
+		//点击更新按钮更新备注
+		$("#updateRemarkBtn").click(function () {
+			var remark = $.trim($("#noteContent").val());
+			if (remark.length == 0){
+				alert("请输入备注信息！！");
+				return false;
+			}
+			$.ajax({
+				url:"clueRemark/editRemark.do",
+				type:"get",
+				data:{
+					"id":$("#remarkId").val(),
+					"noteContent":$("#noteContent").val(),
+					"editFlag":'1',
+					"editBy":'${user.name}'
+				},
+				success(data){
+					if (data==1){
+						alert("更新成功！！");
+						$("#editRemarkModal").modal("hide");
+						pageList(1,2);
+					}else{
+						alert("更新失败，请稍后重试！！");
+					}
+				}
+			})
+		})
+
 	});
 	//点击进入详细界面以后，加载详细的信息列表
 	function getClue(){
@@ -219,7 +247,6 @@
 	}
 
 	//备注的pageList方法
-	//定义分页方法
 	function pageList(pageNo,pageSize){
 		$.ajax({
 			url:"clueRemark/pageList.do",
@@ -299,7 +326,7 @@
 		//将当前备注的id值放入隐藏域当中
 		$("#remarkId").val(id);
 		$.ajax({
-			url:"activityRemark/getRemark.do",
+			url:"clueRemark/getRemark.do",
 			type:"get",
 			data:{
 				"id":id
@@ -621,19 +648,7 @@
 		<div id="remarkDivs">
 
 		</div>
-		<!-- 备注1 -->
-<%--		<div class="remarkDiv" style="height: 60px;">--%>
-<%--			<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">--%>
-<%--			<div style="position: relative; top: -40px; left: 40px;" >--%>
-<%--				<h5>哎呦！</h5>--%>
-<%--				<font color="gray">线索</font> <font color="gray">-</font> <b>李四先生-动力节点</b> <small style="color: gray;"> 2017-01-22 10:10:10 由zhangsan</small>--%>
-<%--				<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">--%>
-<%--					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #E6E6E6;"></span></a>--%>
-<%--					&nbsp;&nbsp;&nbsp;&nbsp;--%>
-<%--					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #E6E6E6;"></span></a>--%>
-<%--				</div>--%>
-<%--			</div>--%>
-<%--		</div>--%>
+
 		<div style="height: 50px; position: relative;top: 30px;">
 			<div id="clueRemarkPage"></div>
 		</div>
@@ -645,6 +660,36 @@
 					<button type="button" class="btn btn-primary" id="addRemark">保存</button>
 				</p>
 			</form>
+		</div>
+	</div>
+
+	<!--修改备注的模态窗口-->
+	<div class="modal fade" id="editRemarkModal" role="dialog">
+		<%-- 备注的id --%>
+		<input type="hidden" id="remarkId">
+		<div class="modal-dialog" role="document" style="width: 40%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">修改备注</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal"  role="form">
+						<div class="form-group">
+							<label for="edit-description" class="col-sm-2 control-label">内容</label>
+							<div class="col-sm-10" style="width: 81%;">
+								<textarea class="form-control" rows="3" id="noteContent"></textarea>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="updateRemarkBtn">更新</button>
+				</div>
+			</div>
 		</div>
 	</div>
 	

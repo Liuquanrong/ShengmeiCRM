@@ -9,4 +9,10 @@ public interface ClueRemarkService {
     PaginationVO<ClueRemark> getPageList(Map<String,String> map);
 
     int addRemark(ClueRemark remark);
+
+    int delRemark(String id);
+
+    ClueRemark getRemark(String id);
+
+    int editRemark(ClueRemark remark);
 }

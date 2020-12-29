@@ -10,8 +10,21 @@
     </insert>
 
 	<select id="getRemarks" resultType="ClueRemark">
-        select * from tbl_clue_remark where clueId=#{clueId}
+        select * from tbl_clue_remark where clueId=#{clueId} order by ifnull (editTime,createTime) desc
     </select>
+
+    <delete id="delRemark">
+        delete from tbl_clue_remark where id=#{id}
+    </delete>
+
+    <select id="getRemark" resultType="ClueRemark">
+        select * from tbl_clue_remark where id=#{id}
+    </select>
+
+    <update id="updateRemark">
+        update tbl_clue_remark set editFlag=#{editFlag},editBy=#{editBy},noteContent=#{noteContent},editTime=#{editTime}
+        where id=#{id}
+    </update>
   	
 </mapper>
 

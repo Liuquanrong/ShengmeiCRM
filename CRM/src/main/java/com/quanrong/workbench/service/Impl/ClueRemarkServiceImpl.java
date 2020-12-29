@@ -28,6 +28,25 @@ public class ClueRemarkServiceImpl implements ClueRemarkService {
     }
 
     @Override
+    public int delRemark(String id) {
+        int result = remarkDao.delRemark(id);
+        return result;
+    }
+
+    @Override
+    public ClueRemark getRemark(String id) {
+        ClueRemark remark = remarkDao.getRemark(id);
+        return remark;
+    }
+
+    @Override
+    public int editRemark(ClueRemark remark) {
+        remark.setEditTime(DateUtil.getSystemTime());
+        int result = remarkDao.updateRemark(remark);
+        return result;
+    }
+
+    @Override
     public PaginationVO<ClueRemark> getPageList(Map<String,String> map) {
         PaginationVO<ClueRemark> vo = new PaginationVO<>();
         Page page = PageHelper.startPage(Integer.valueOf(map.get("pageNo")),Integer.valueOf(map.get("pageSize")));
