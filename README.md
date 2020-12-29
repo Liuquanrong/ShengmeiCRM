@@ -12,3 +12,13 @@ ShengmeiCRM Project
     ·活动详细界面中的备注栏中要求显示备注人的名称、头像、备注时间、备注活动的名称
     ·如果备注信息被修改，此条备注信息显示为修改人的名称以及修改时间
     ·备注信息根据时间进行排序，当活动的备注被修改以后，修改时间作为本条备注出现在最新的备注信息中
+  ·clue线索模块的开发流程，出去常用的CRUD操作外，增加使用数据字典的方式缓存数据
+    ·在服务器启动的时候从数据库中获取一些常用的数据，将他们放入到服务器的缓存当中，方便使用，我们可以将这些数据放入到全局作用域对象当中
+      ·需要注意使用SSM框架整合开发的时候，使用监听器对象，监听全局作用域的创建，同时将数据取出放入到全局作用域当中
+      ·在监听器开发中不能使用@Resource来创建Service对象，因为这个注解数据Spring而监听器对象属于web创建，需要使用如下方式创建Service对象
+        //获取全局作用域
+        ServletContext application = sce.getServletContext();
+        ApplicationContext context = WebApplicationContextUtils.getRequiredWebApplicationContext(application);
+        //此处传入的bean对象需要是实现类对象，并且首字母小写，因为我们使用@Service注解创建的对象是首字母小写的类名全称
+        DicService dicService = (DicService) context.getBean("dicServiceImpl");
+      ·将线索模块与市场活动模块相关联
