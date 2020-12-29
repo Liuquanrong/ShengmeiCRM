@@ -156,13 +156,12 @@
 					var userList = data.userList;
 					currentClue = data.clue;
 					$.each(userList,function (index,element) {
-						if (currentClue.owner == element.id){
+						if (currentClue.owner == element.name){
 							$("#edit-clueOwner").append('<option value='+element.id+' selected>'+element.name+'</option>');
 						}else{
 							$("#edit-clueOwner").append('<option value='+element.id+'>'+element.name+'</option>');
 						}
 					})
-					$("#edit-clueOwner").val(currentClue.owner);
 					$("#edit-company").val(currentClue.company);
 					$("#edit-call").val(currentClue.appellation);
 					$("#edit-fullname").val(currentClue.fullname);
