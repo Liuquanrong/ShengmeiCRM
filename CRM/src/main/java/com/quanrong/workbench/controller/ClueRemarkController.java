@@ -1,6 +1,7 @@
 package com.quanrong.workbench.controller;
 
 import com.quanrong.VO.PaginationVO;
+import com.quanrong.workbench.domian.Activity;
 import com.quanrong.workbench.domian.ClueRemark;
 import com.quanrong.workbench.service.ClueRemarkService;
 import org.springframework.stereotype.Controller;
@@ -57,4 +58,5 @@ public class ClueRemarkController {
         int result = remarkService.editRemark(remark);
         return result;
     }
+
 }

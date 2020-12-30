@@ -2,6 +2,7 @@ package com.quanrong.workbench.controller;
 
 import com.quanrong.VO.PaginationVO;
 import com.quanrong.settings.domain.User;
+import com.quanrong.workbench.domian.Activity;
 import com.quanrong.workbench.domian.Clue;
 import com.quanrong.workbench.service.ActivityService;
 import com.quanrong.workbench.service.ClueService;
@@ -78,4 +79,12 @@ public class ClueController {
         int result = clueService.updateClue(clue);
         return result;
     }
+
+    @RequestMapping("/getBundActivity.do")
+    @ResponseBody
+    public List<Activity> doGetBundActivity(String clueId){
+        List<Activity> activityList = clueService.getBundActivity(clueId);
+        return activityList;
+    }
+
 }

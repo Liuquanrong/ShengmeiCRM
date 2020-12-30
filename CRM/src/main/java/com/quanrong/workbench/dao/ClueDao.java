@@ -1,6 +1,7 @@
 package com.quanrong.workbench.dao;
 
 
+import com.quanrong.workbench.domian.Activity;
 import com.quanrong.workbench.domian.Clue;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface ClueDao {
     Clue getClue(String id);
 
     int updateClue(Clue clue);
+
+    List<Activity> getBundActivity(String clueId);
 }

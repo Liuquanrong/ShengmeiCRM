@@ -1,8 +1,10 @@
 package com.quanrong.workbench.service;
 
 import com.quanrong.VO.PaginationVO;
+import com.quanrong.workbench.domian.Activity;
 import com.quanrong.workbench.domian.Clue;
 
+import java.util.List;
 import java.util.Map;
 
 public interface ClueService {
@@ -15,4 +17,6 @@ public interface ClueService {
     Clue getClue(String id);
 
     int updateClue(Clue clue);
+
+    List<Activity> getBundActivity(String clueId);
 }

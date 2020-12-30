@@ -6,6 +6,7 @@ import com.quanrong.VO.PaginationVO;
 import com.quanrong.utils.DateUtil;
 import com.quanrong.utils.UUIDUtil;
 import com.quanrong.workbench.dao.ClueDao;
+import com.quanrong.workbench.domian.Activity;
 import com.quanrong.workbench.domian.Clue;
 import com.quanrong.workbench.service.ClueService;
 import org.springframework.stereotype.Service;
@@ -57,4 +58,11 @@ public class ClueServiceImpl implements ClueService {
         int result = clueDao.updateClue(clue);
         return result;
     }
+
+    @Override
+    public List<Activity> getBundActivity(String clueId) {
+        List<Activity> activityList = clueDao.getBundActivity(clueId);
+        return activityList;
+    }
+
 }
