@@ -59,10 +59,4 @@ public class ClueServiceImpl implements ClueService {
         return result;
     }
 
-    @Override
-    public List<Activity> getBundActivity(String clueId) {
-        List<Activity> activityList = clueDao.getBundActivity(clueId);
-        return activityList;
-    }
-
 }

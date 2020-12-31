@@ -94,13 +94,6 @@
             address=#{address} where id=#{id};
     </update>
 
-    <select id="getBundActivity" resultType="Activity">
-        select r.id,a.name,a.startDate,a.endDate,u.name owner from tbl_clue_activity_relation r
-        join tbl_activity a on r.activityId = a.id
-        join tbl_user u on a.owner=u.id
-        where r.clueId = #{id};
-    </select>
-
 </mapper>
 
 

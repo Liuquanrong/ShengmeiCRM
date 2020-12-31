@@ -18,6 +18,4 @@ public interface ClueDao {
     Clue getClue(String id);
 
     int updateClue(Clue clue);
-
-    List<Activity> getBundActivity(String clueId);
 }

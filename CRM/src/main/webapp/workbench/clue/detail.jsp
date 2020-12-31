@@ -228,6 +228,12 @@
            $("#bundModal").modal("show");
         })
 
+        //点击绑定模态窗口中的查询按钮的时候，进行市场活动的查询
+        $("#searchActivityBtn").click(function () {
+            $("#hidden-name").val($.trim($("#search-name").val()));
+            activityPageList(1,2);
+        })
+
 		//对关联活动列表的复选框进行处理
 		$("#selectAll").click(function () {
 			$("input[name=select]").prop("checked",this.checked)
@@ -389,28 +395,26 @@
     function activityPageList(pageNo,pageSize) {
 		$("#search-name").val($.trim($("#hidden-name").val()));
 		$.ajax({
-			url:"activity/pageList.do",
+			url:"ClueActivityRelation/pageList.do",
 			data:{
 				"pageNo":pageNo,
 				"pageSize":pageSize,
-				"name":$.trim($("#search-name").val()),
-				"owner":'',
-				"startDate":'',
-				"endDate":''
+				"name":$("#search-name").val(),
+                "clueId":currentClue.id
 			},
 			type:"get",
 			success(data){
 				/*data：市场活动信息列表、分页插件需要查询出来的总记录数 */
 				var html="";
 				$.each(data.dataList,function (index,element) {
-					html += '<tr>'
-					html += '<td><input type="checkbox" name="select" value='+element.id+'></td>'
-					//当点击活动名称的时候跳转到详细界面，同时携带活动的id编号，用于detail.jsp界面获取活动信息
-					html += '<td>'+element.name+'</td>'
-					html += '<td>'+element.startDate+'</td>'
-					html += '<td>'+element.endDate+'</td>'
-					html += '<td>'+element.owner+'</td>'
-					html += '</tr>'
+                    html += '<tr>'
+                    html += '<td><input type="checkbox" name="select" value='+element.id+'></td>'
+                    //当点击活动名称的时候跳转到详细界面，同时携带活动的id编号，用于detail.jsp界面获取活动信息
+                    html += '<td>'+element.name+'</td>'
+                    html += '<td>'+element.startDate+'</td>'
+                    html += '<td>'+element.endDate+'</td>'
+                    html += '<td>'+element.owner+'</td>'
+                    html += '</tr>'
 				})
 				$("#activityList").html(html);
 				//计算总页数
@@ -439,7 +443,7 @@
     //定义绑定的市场活动的列表获取方法
 	function getBundActivity() {
 		$.ajax({
-			url:"clue/getBundActivity.do",
+			url:"ClueActivityRelation/getBundActivity.do",
 			type:"get",
 			data:{
 				"clueId":currentClue.id
@@ -484,10 +488,9 @@
 
 </head>
 <body>
-
 	<!-- 关联市场活动的模态窗口 -->
 	<div class="modal fade" id="bundModal" role="dialog">
-        <input type="hidden" name="search-name"/>
+        <input type="hidden" id="hidden-name">
 		<div class="modal-dialog" role="document" style="width: 80%;">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -500,7 +503,7 @@
 					<div class="btn-group" style="position: relative; top: 18%; left: 8px;">
 						<form class="form-inline" role="form">
 						  <div class="form-group has-feedback">
-						    <input type="text" class="form-control" style="width: 300px;" placeholder="请输入市场活动名称，支持模糊查询">
+						    <input type="text" class="form-control" id="search-name" style="width: 300px;"  placeholder="请输入市场活动名称，支持模糊查询" >
 						    <span class="glyphicon glyphicon-search form-control-feedback"></span>
 						  </div>
 							<button type="button" id="searchActivityBtn" class="btn btn-default">查询</button>
@@ -525,7 +528,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					<button type="button" id="addRelation">关联</button>
+					<button type="button" class="btn btn-default" id="addRelation">关联</button>
 				</div>
 			</div>
 		</div>

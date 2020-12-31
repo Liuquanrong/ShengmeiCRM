@@ -80,11 +80,4 @@ public class ClueController {
         return result;
     }
 
-    @RequestMapping("/getBundActivity.do")
-    @ResponseBody
-    public List<Activity> doGetBundActivity(String clueId){
-        List<Activity> activityList = clueService.getBundActivity(clueId);
-        return activityList;
-    }
-
 }

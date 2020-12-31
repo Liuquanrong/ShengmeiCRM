@@ -11,6 +11,24 @@
     <delete id="delRelation">
         delete from tbl_clue_activity_relation where id=#{id}
     </delete>
+
+    <select id="getBundActivity" resultType="Activity">
+        select r.id,a.name,a.startDate,a.endDate,u.name owner from tbl_clue_activity_relation r
+        join tbl_activity a on r.activityId = a.id
+        join tbl_user u on a.owner=u.id
+        where r.clueId = #{id};
+    </select>
+
+    <select id="getActivityList" resultType="Activity">
+        select a.id,a.name,a.startDate,a.endDate,u.name owner from tbl_activity a
+        join tbl_user u on a.owner=u.id
+        where a.id not in (select activityId from tbl_clue_activity_relation where clueId=#{clueId})
+        <if test="name!=null and name!=''">
+            and a.name like '%' #{name} '%'
+        </if>
+        order by a.createTime desc
+
+    </select>
   	
 </mapper>
 
