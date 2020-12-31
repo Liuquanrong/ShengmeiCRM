@@ -71,12 +71,15 @@
 		$("#remarkDivs").on("mouseout",".myHref",function (){
 			$(this).children("span").css("color","#E6E6E6");
 		})
+
 		//获取当前线索的信息进行页面填充
 		getClue();
 		//获取当前线索的备注信息
 		pageList(1,2);
+
 		//获取绑定的市场活动信息
 		getBundActivity();
+
 		//点击修改按钮，将详细数据填入模态窗口中
 		$("#editClueBtn").click(function(){
 			$.each(userList,function (index,element) {
@@ -224,12 +227,21 @@
 
         //点击获取市场活动的所有数据
         $("#activityListBtn").click(function () {
-           activityPageList(1,2);
-           $("#bundModal").modal("show");
+        	//在打开绑定活动的模态窗口的时候将用于存放搜索栏内容的隐藏域信息清空
+			$("#hidden-name").val('');
+			$("#selectAll").prop("checked",false)
+           	activityPageList(1,2);
+           	$("#bundModal").modal("show");
         })
-
+		//将回车键绑定查询
+		$(document).keydown(function(event){
+			if (event.keyCode == 13) {
+				$("#searchActivityBtn")[0].click();
+			}
+		})
         //点击绑定模态窗口中的查询按钮的时候，进行市场活动的查询
         $("#searchActivityBtn").click(function () {
+        	//将搜索框当中的信息保存到隐藏域当中
             $("#hidden-name").val($.trim($("#search-name").val()));
             activityPageList(1,2);
         })
@@ -501,7 +513,8 @@
 				</div>
 				<div class="modal-body">
 					<div class="btn-group" style="position: relative; top: 18%; left: 8px;">
-						<form class="form-inline" role="form">
+						<!--在此处的表单中对他的submit事件绑定return false事件，这样就不会导致回车键强制提交表单-->
+						<form class="form-inline" role="form" onsubmit="return false;">
 						  <div class="form-group has-feedback">
 						    <input type="text" class="form-control" id="search-name" style="width: 300px;"  placeholder="请输入市场活动名称，支持模糊查询" >
 						    <span class="glyphicon glyphicon-search form-control-feedback"></span>
@@ -512,7 +525,7 @@
 					<table id="activityTable" class="table table-hover" style="width: 900px; position: relative;top: 10px;">
 						<thead>
 							<tr style="color: #B3B3B3;">
-								<td><input type="checkbox" id="selectAll"/></td>
+								<td><input type="checkbox" id="selectAll"></td>
 								<td>名称</td>
 								<td>开始日期</td>
 								<td>结束日期</td>
