@@ -57,4 +57,9 @@ public class ClueActivityRelationServiceImpl implements ClueActivityRelationServ
         vo.setDataList(activityList);
         return vo;
     }
+
+    @Override
+    public void delRelations(String[] ids) {
+        relationDao.delRelations(ids);
+    }
 }

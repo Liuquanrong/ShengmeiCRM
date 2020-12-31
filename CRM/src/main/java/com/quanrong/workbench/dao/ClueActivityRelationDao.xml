@@ -27,8 +27,14 @@
             and a.name like '%' #{name} '%'
         </if>
         order by a.createTime desc
-
     </select>
+
+    <delete id="delRelations">
+        delete from tbl_clue_activity_relation where clueId in
+        <foreach collection="array" open="(" separator="," close=")" item="clueId">
+            #{clueId}
+        </foreach>
+    </delete>
   	
 </mapper>
 

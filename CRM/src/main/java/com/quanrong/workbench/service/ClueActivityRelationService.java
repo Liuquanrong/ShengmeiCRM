@@ -15,4 +15,6 @@ public interface ClueActivityRelationService {
     List<Activity> getBundActivity(String clueId);
 
     PaginationVO<Activity> getPageList(Map<String, String> map);
+
+    void delRelations(String[] ids);
 }

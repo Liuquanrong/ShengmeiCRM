@@ -47,6 +47,11 @@ public class ClueRemarkServiceImpl implements ClueRemarkService {
     }
 
     @Override
+    public void delRemarks(String[] ids) {
+        remarkDao.delRemarks(ids);
+    }
+
+    @Override
     public PaginationVO<ClueRemark> getPageList(Map<String,String> map) {
         PaginationVO<ClueRemark> vo = new PaginationVO<>();
         Page page = PageHelper.startPage(Integer.valueOf(map.get("pageNo")),Integer.valueOf(map.get("pageSize")));

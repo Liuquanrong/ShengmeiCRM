@@ -5,6 +5,8 @@ import com.quanrong.settings.domain.User;
 import com.quanrong.workbench.domian.Activity;
 import com.quanrong.workbench.domian.Clue;
 import com.quanrong.workbench.service.ActivityService;
+import com.quanrong.workbench.service.ClueActivityRelationService;
+import com.quanrong.workbench.service.ClueRemarkService;
 import com.quanrong.workbench.service.ClueService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,10 @@ public class ClueController {
     ClueService clueService;
     @Resource
     ActivityService activityService;
+    @Resource
+    ClueRemarkService remarkService;
+    @Resource
+    ClueActivityRelationService relationService;
 
     @RequestMapping("/getUserList.do")
     @ResponseBody
@@ -58,6 +64,8 @@ public class ClueController {
     @RequestMapping("delClues.do")
     @ResponseBody
     public int doDelClue(String[] ids){
+        remarkService.delRemarks(ids);
+        relationService.delRelations(ids);
         int result = clueService.delClues(ids);
         return result;
     }

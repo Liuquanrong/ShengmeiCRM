@@ -25,6 +25,13 @@
         update tbl_clue_remark set editFlag=#{editFlag},editBy=#{editBy},noteContent=#{noteContent},editTime=#{editTime}
         where id=#{id}
     </update>
+
+    <delete id="delRemarks">
+        delete from tbl_clue_remark where clueId in
+        <foreach collection="array" open="(" separator="," close=")" item="clueId">
+            #{clueId}
+        </foreach>
+    </delete>
   	
 </mapper>
 
